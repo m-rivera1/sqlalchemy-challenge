@@ -49,7 +49,7 @@ def percipitation():
     session = Session(engine)
 
     """Return a list of percipitation between specific data range"""
-    # Query all passengers
+  
     results = session.query(Measurement.date, Measurement.prcp).\
         filter(Measurement.date >= "2016-08-23").\
         filter(Measurement.date >= "2017-08-23").all()
@@ -68,43 +68,39 @@ def percipitation():
 def stations():
  
     """Return a JSON list of stations from the dataset"""
-    # Query all passengers
-    results = session.query(Passenger.name, Passenger.age, Passenger.sex).all()
+ 
+    results = session.query(Station.station.all()
 
-    session.close()
+    #results_list = ravel(results)
 
-    # Create a dictionary from the row data and append to a list of all_passengers
-    all_passengers = []
-    for name, age, sex in results:
-        passenger_dict = {}
-        passenger_dict["name"] = name
-        passenger_dict["age"] = age
-        passenger_dict["sex"] = sex
-        all_passengers.append(passenger_dict)
+    #return jsonify(results)
 
-    return jsonify(all_passengers)
+    
+ @app.route("/api/v1.0/tobs")
+ def tobs():
 
-@app.route("/api/v1.0/tobs")
-def tobs():
-    # Create our session (link) from Python to the DB
-    session = Session(engine)
+#     """Return a JSON list of tobs from between a specific data range"""
+#     # query identical to results query for percipitation
 
-    """Return a list of passenger data including the name, age, and sex of each passenger"""
-    # Query all passengers
-    results = session.query(Passenger.name, Passenger.age, Passenger.sex).all()
+   results = session.query(Measurement.date, Measurement.tobs).\
+        filter(Measurement.date >= "2016-08-23").\
+        filter(Measurement.date >= "2017-08-23").all()
 
-   
 
-@app.route("/api/v1.0/start")
-def start():
-    # Create our session (link) from Python to the DB
-    session = Session(engine)
+    return jsonify(results)
 
-    """Return a list of passenger data including the name, age, and sex of each passenger"""
-    # Query all passengers
-    results = session.query(Passenger.name, Passenger.age, Passenger.sex).all()
 
-     session.close()
+# @app.route("/api/v1.0/start")
+# def start_date():
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+
+
+# @app.route("/api/v1.0/<start>/<end>")
+# def start_end():
+
+
+#session.close()
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
